@@ -6,7 +6,7 @@ interface SqlSelect {
   distinct(): SqlSelect
   field(name: string | any, alias?: string, options?: any): SqlSelect
   fields(fields: Object | any[]): SqlSelect
-  from(name: string, alias?: string): SqlSelect
+  from(name: string | SqlSelect, alias?: string): SqlSelect
   join(name: string, alias?: string, condition?: string | any): SqlSelect
   left_join(name: string, alias?: string, condition?: string | any): SqlSelect
   right_join(name: string, alias?: string, condition?: string | any): SqlSelect
@@ -22,6 +22,7 @@ interface SqlSelect {
   clone(): SqlSelect
   toString(): string
   toParam(options?: Object, numberedParametersStartAt?: number): { text: string, values: any[] }
+  union_all(query: SqlSelect): SqlSelect
   with(alias: string, table: SqlSelect | SqlInsert | SqlUpdate | SqlDelete): SqlSelect
 }
 
@@ -97,6 +98,7 @@ interface QueryBuilderOptions {
   separator?: string
   singleQuoteReplacement?: string
   tableAliasQuoteCharacter?: string
+  useAsForTableAliasNames?: boolean
 }
 
 interface QueryBuilder {
